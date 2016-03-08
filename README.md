@@ -10,7 +10,7 @@ jekyll-ci:
     environment:
         CI_SERVER_URL:        "https://git.example.com/ci"
         RUNNER_EXECUTOR:      "shell"
-        RUNNER_DESCRIPTION:   "Gitlab CI Jekyllrunner"
+        RUNNER_DESCRIPTION:   "Gitlab CI Jekyll runner"
         RUNNER_TOKEN:         "abcdef0123456789abcdef01234567"
     volumes:
         - "/var/www/:/output/"

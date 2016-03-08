@@ -7,14 +7,16 @@ MAINTAINER Michał "rysiek" Woźniak <rysiek@occrp.org>
 
 # environment
 ENV DEBIAN_FRONTEND=noninteractive 
-ENV HUGO_VERSION=0.15
+
+# Backports for new Ruby and great justice
+RUN apt-add-repository ppa:brightbox/ruby-ng
 
 # Ruby
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
-        ruby \
-        ruby-dev \
+        ruby2.0 \
+        ruby2.0-dev \
         make \
         gcc \
         nodejs && \
