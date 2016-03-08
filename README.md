@@ -1,18 +1,18 @@
-# Gitlab CI Hugo runner
+# Gitlab CI Jekyll runner
 
-A Gitlab CI runner docker image for generating Hugo-managed static sites. Based on the great [`gitlab-ci-multi-runner`](https://hub.docker.com/r/sameersbn/gitlab-ci-multi-runner/), and inspired by [`docker-hugo`](https://github.com/jojomi/docker-hugo/blob/master/Dockerfile).
+A Gitlab CI runner docker image for generating Jekyll-managed static sites. Based on the great [`gitlab-ci-multi-runner`](https://hub.docker.com/r/sameersbn/gitlab-ci-multi-runner/).
 
 ## Example `docker-compose` config
 
 ```
-hugo-ci:
-    build: ./gitlab-ci-hugo-runner
+jekyll-ci:
+    build: ./gitlab-ci-jekyll-runner
     environment:
         CI_SERVER_URL:        "https://git.example.com/ci"
         RUNNER_EXECUTOR:      "shell"
-        RUNNER_DESCRIPTION:   "Gitlab CI Hugo runner"
+        RUNNER_DESCRIPTION:   "Gitlab CI Jekyllrunner"
         RUNNER_TOKEN:         "abcdef0123456789abcdef01234567"
     volumes:
         - "/var/www/:/output/"
-        - "/var/lib/gitlab-ci-hugo-runner/:/home/gitlab_ci_multi_runner/data/"
+        - "/var/lib/gitlab-ci-jekyll-runner/:/home/gitlab_ci_multi_runner/data/"
 ```
