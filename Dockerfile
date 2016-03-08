@@ -8,27 +8,23 @@ MAINTAINER Michał "rysiek" Woźniak <rysiek@occrp.org>
 # environment
 ENV DEBIAN_FRONTEND=noninteractive 
 
+# Ruby and requirements
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
         software-properties-common \
         make \
         gcc \
-        nodejs && \
-    rm -rf /var/lib/apt/lists/*
-
-
-# Backports for new Ruby and great justice
-RUN apt-add-repository ppa:brightbox/ruby-ng
-
-# Ruby
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+        libc-dev-bin \
+        libc6-dev \
+        linux-libc-dev \
+        libc6 \
         ruby2.0 \
-        ruby2.0-dev && \
+        ruby2.0-dev \
+        nodejs && \
     rm -rf /var/lib/apt/lists/*
     
 # Jekyll
-RUN gem install jekyll bundle
+RUN gem2.0 install jekyll bundle
 
 VOLUME /output
