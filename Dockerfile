@@ -22,6 +22,15 @@ RUN apt-get update && \
         ruby2.0-dev \
         nodejs && \
     rm -rf /var/lib/apt/lists/*
+
+# we might need to install some packages, but doing this in the entrypoint doesn't make any sense
+ARG INSTALL_PACKAGES=
+RUN if [ "$INSTALL_PACKAGES" != "" ]; then \
+        export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y \
+            $INSTALL_PACKAGES \
+            --no-install-recommends && \
+        rm -rf /var/lib/apt/lists/* ; \
+    fi
     
 # Jekyll
 RUN gem2.0 install jekyll bundle
