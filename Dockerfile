@@ -6,7 +6,13 @@ MAINTAINER Michał "rysiek" Woźniak <rysiek@occrp.org>
 #
 
 # environment
-ENV DEBIAN_FRONTEND=noninteractive 
+ENV DEBIAN_FRONTEND=noninteractive
+
+# just in case some tool needs UTF-8 support
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+RUN locale-gen en_US.UTF-8
 
 # we might need to install some packages, but doing this in the entrypoint doesn't make any sense
 ARG INSTALL_PACKAGES=
