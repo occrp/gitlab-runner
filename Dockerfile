@@ -19,7 +19,7 @@ ARG ADD_REPOSITORY_KEYS=
 RUN if [ "$ADD_REPOSITORY_KEYS" != "" ]; then \
         DEBIAN_FRONTEND=noninteractive apt-get -q update && \
         apt-get -q -y --no-install-recommends install \
-            gpg \
+            gnupg \
             apt-transport-https \
             ca-certificates \
             lsb-release && \
