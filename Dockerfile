@@ -8,12 +8,6 @@ MAINTAINER Michał "rysiek" Woźniak <rysiek@occrp.org>
 # environment
 ENV DEBIAN_FRONTEND=noninteractive
 
-# just in case some tool needs UTF-8 support
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US:en
-ENV LC_ALL en_US.UTF-8
-RUN locale-gen en_US.UTF-8
-
 # adding repository keys
 ARG ADD_REPOSITORY_KEYS=
 RUN if [ "$ADD_REPOSITORY_KEYS" != "" ]; then \
@@ -36,12 +30,18 @@ RUN if [ "$ADD_REPOSITORIES" != "" ]; then \
     fi
 
 # we might need to install some packages, but doing this in the entrypoint doesn't make any sense
+# we also need the `locales` package for `locale-gen`
 ARG INSTALL_PACKAGES=
-RUN if [ "$INSTALL_PACKAGES" != "" ]; then \
-        export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y \
-            $INSTALL_PACKAGES \
-            --no-install-recommends && \
-        rm -rf /var/lib/apt/lists/* ; \
-    fi
+RUN export DEBIAN_FRONTEND=noninteractive && apt-get update && apt-get install -y \
+        locales \
+        $INSTALL_PACKAGES \
+        --no-install-recommends && \
+    rm -rf /var/lib/apt/lists/*
+
+# just in case some tool needs UTF-8 support
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
+RUN locale-gen en_US.UTF-8
 
 VOLUME ["/etc/gitlab-runner", "/home/gitlab-runner", "/output"]
