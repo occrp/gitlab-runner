@@ -1,4 +1,4 @@
-FROM sameersbn/gitlab-ci-multi-runner:1.1.4-7
+FROM gitlab/gitlab-runner:ubuntu
 MAINTAINER Michał "rysiek" Woźniak <rysiek@occrp.org>
 
 #
@@ -44,4 +44,4 @@ RUN if [ "$INSTALL_PACKAGES" != "" ]; then \
         rm -rf /var/lib/apt/lists/* ; \
     fi
 
-VOLUME /output
+VOLUME ["/etc/gitlab-runner", "/home/gitlab-runner", "/output"]
