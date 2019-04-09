@@ -27,4 +27,4 @@ if [ -f "${CA_CERTIFICATES_PATH}" ]; then
 fi
 
 # launch gitlab-runner passing all arguments
-exec su -p -c "env PATH=\"$PATH\" gitlab-runner $*" gitlab-runner
+exec gitlab-runner "$@"
