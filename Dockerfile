@@ -8,6 +8,14 @@ MAINTAINER Michał "rysiek" Woźniak <rysiek@occrp.org>
 # environment
 ENV DEBIAN_FRONTEND=noninteractive
 
+# uid and gid of the gitlab-runner user
+ARG GITLAB_RUNNER_UID=999
+ARG GITLAB_RUNNER_GID=999
+
+# and let's modify the group and the user
+RUN groupmod --gid ${GITLAB_RUNNER_GID} gitlab-runner \
+    && usermod --uid "${GITLAB_RUNNER_UID}" gitlab-runner
+
 # adding repository keys
 ARG ADD_REPOSITORY_KEYS=
 RUN if [ "$ADD_REPOSITORY_KEYS" != "" ]; then \
