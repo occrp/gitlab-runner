@@ -26,5 +26,15 @@ if [ -f "${CA_CERTIFICATES_PATH}" ]; then
   cmp --silent "${CA_CERTIFICATES_PATH}" "${LOCAL_CA_PATH}" || update_ca
 fi
 
+# if we don't have a config file...
+if [[ ! -e ${CONFIG_FILE} ]]; then
+  # ...but we do have config vars...
+  if [[ -n ${CI_SERVER_URL} && -n ${RUNNER_TOKEN} && -n ${RUNNER_DESCRIPTION} && -n ${RUNNER_EXECUTOR} ]]; then
+    # register the runner
+    su gitlab-runner -c \
+      "gitlab-runner register --non-interactive --config '${CONFIG_FILE}' --url '${CI_SERVER_URL}' --registration-token '${RUNNER_TOKEN}' --description '${RUNNER_DESCRIPTION}' --executor '${RUNNER_EXECUTOR}'"
+  fi
+fi
+
 # launch gitlab-runner passing all arguments
 exec gitlab-runner "$@"

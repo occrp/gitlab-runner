@@ -52,4 +52,8 @@ ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 RUN locale-gen en_US.UTF-8
 
+# copy in the entrypoint script
+COPY entrypoint /
+RUN chmod +x /entrypoint
+
 VOLUME ["/etc/gitlab-runner", "/home/gitlab-runner", "/output"]
