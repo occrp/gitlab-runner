@@ -28,11 +28,16 @@ fi
 
 # if we don't have a config file...
 if [[ ! -e ${CONFIG_FILE} ]]; then
+  echo "+-- no config file found in: '${CONFIG_FILE}'"
   # ...but we do have config vars...
   if [[ -n ${CI_SERVER_URL} && -n ${RUNNER_TOKEN} && -n ${RUNNER_DESCRIPTION} && -n ${RUNNER_EXECUTOR} ]]; then
+    echo "    configuration vars found, registering a new runner..."
     # register the runner
     su gitlab-runner -c \
       "gitlab-runner register --non-interactive --config '${CONFIG_FILE}' --url '${CI_SERVER_URL}' --registration-token '${RUNNER_TOKEN}' --description '${RUNNER_DESCRIPTION}' --executor '${RUNNER_EXECUTOR}'"
+  else
+    echo "    ERROR: no config file and no configuration vars!"
+    exit 1
   fi
 fi
 
